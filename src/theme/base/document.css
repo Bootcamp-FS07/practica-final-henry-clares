@@ -5,5 +5,5 @@ body {
 }
 
 body {
-  @apply dark:bg-gray-900 dark:text-white text-gray-900;
+  @apply dark:bg-gray-900 dark:text-white text-gray-900 bg-white;
 }

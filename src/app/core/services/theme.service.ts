@@ -3,6 +3,7 @@ import {
   Injectable,
   OnDestroy,
   PLATFORM_ID,
+  Renderer2,
   RendererFactory2,
 } from '@angular/core';
 import { ReplaySubject, Subject, takeUntil } from 'rxjs';
@@ -13,13 +14,14 @@ import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 })
 export class ThemeService implements OnDestroy {
   private _platformId = inject(PLATFORM_ID);
-  private _renderer = inject(RendererFactory2).createRenderer(null, null);
+  private _renderer: Renderer2;
   private _document = inject(DOCUMENT);
   private _theme$ = new ReplaySubject<'light' | 'dark'>(1);
   public theme$ = this._theme$.asObservable();
   private _destroyed$ = new Subject<void>();
 
-  constructor() {
+  constructor(rendererFactory: RendererFactory2) {
+    this._renderer = rendererFactory.createRenderer(null, null);
     this.syncThemeFromLocalStorage();
     this.toggleClassOnThemeChanges();
   }
