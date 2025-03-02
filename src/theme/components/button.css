@@ -24,7 +24,7 @@
 }
 
 .btn-secondary {
-  @apply bg-zinc-200 text-zinc-900 dark:bg-zinc-700 dark:text-white;
+  @apply bg-gray-200 text-zinc-900 dark:bg-gray-500 dark:text-white;
 }
 
 .btn-primary {

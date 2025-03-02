@@ -42,7 +42,7 @@ export class PostService {
   }
 
   editPost(id: string, text: string) {
-    return this.http.put(`${this.postUrl}/${id}`, {
+    return this.http.patch(`${this.postUrl}/${id}`, {
       text,
     });
   }

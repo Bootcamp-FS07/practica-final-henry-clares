@@ -34,27 +34,73 @@
               >
                 <ul>
                   <li>
-                    <a href="#" class="menu-item flex items-center gap-2">
-                      <ng-icon name="heroTrash"></ng-icon>
-                      Delete</a
+                    <button
+                      type="button"
+                      class="menu-item cursor-pointer w-full text-start flex items-center gap-2"
+                      (click)="startEditing(post)"
                     >
+                      <ng-icon name="heroPencilSquare"></ng-icon>
+                      Edit
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      type="button"
+                      class="menu-item cursor-pointer w-full text-start flex items-center gap-2"
+                      (click)="openModal(); post.openMenu = false"
+                    >
+                      <ng-icon name="heroTrash"></ng-icon>
+                      Delete
+                    </button>
                   </li>
                 </ul>
-                <div class="">
-                  <a class="menu-item cursor-pointer flex items-center gap-2">
-                    <ng-icon name="heroPencilSquare"></ng-icon>
-                    Edit</a
-                  >
-                </div>
               </div>
             }
           </div>
+          @if (showModal) {
+            <app-confirm-modal
+              *ngIf="showModal"
+              title="Delete Post"
+              message="Are you sure you want to delete this post?"
+              (okAction)="deletePost(post._id)"
+              (cancelAction)="closeModal()"
+            ></app-confirm-modal>
+          }
         }
       </div>
 
-      <div class="pb-2">
-        <p class="text-gray-600 dark:text-gray-300">{{ post.text }}</p>
-      </div>
+      @if (!post.editing) {
+        <div class="pb-2">
+          <p class="text-gray-600 dark:text-gray-300">{{ post.text }}</p>
+        </div>
+      }
+
+      @if (post.editing) {
+        <form
+          [formGroup]="editPostForm"
+          (ngSubmit)="editPost(post); post.editing = false"
+        >
+          <textarea
+            placeholder="Write something..."
+            class="input-form w-full p-2 border rounded mb-2"
+            formControlName="text"
+            (value)="(post.text)"
+          ></textarea>
+          <div class="flex justify-end gap-2">
+            <button class="btn btn-secondary" (click)="post.editing = false">
+              Cancel
+            </button>
+
+            <button
+              type="submit"
+              class="btn bg-green-500 text-white"
+              [disabled]="editPostForm.invalid"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      }
 
       <div class="mt-2 flex items-center gap-2">
         <input placeholder="Add a comment..." class="input-form flex-grow" />

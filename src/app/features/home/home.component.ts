@@ -13,6 +13,7 @@ import { NgIcon } from '@ng-icons/core';
 import { ToastService } from '../../core/services/toast/toast.service';
 import { BehaviorSubject } from 'rxjs';
 import { storage } from '../../core/utils/storage/storage.util';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal/confirm-modal.component';
 
 interface PostEditable extends Post {
   editing: boolean;
@@ -21,7 +22,13 @@ interface PostEditable extends Post {
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule, NgIcon, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgIcon,
+    ReactiveFormsModule,
+    ConfirmModalComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -30,8 +37,16 @@ export class HomeComponent implements OnInit {
   toastService = inject(ToastService);
 
   private MIN_LENGTH = 4;
+  showModal = false;
 
   postForm = new FormGroup({
+    text: new FormControl('', [
+      Validators.required,
+      Validators.minLength(this.MIN_LENGTH),
+    ]),
+  });
+
+  editPostForm = new FormGroup({
     text: new FormControl('', [
       Validators.required,
       Validators.minLength(this.MIN_LENGTH),
@@ -75,25 +90,38 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  editPost(post: Post) {
-    console.log(post);
-    // post.editing = true;
+  startEditing(post: PostEditable) {
+    post.editing = true;
+    post.openMenu = false;
+    this.editPostForm.patchValue({ text: post.text });
+  }
+
+  editPost(post: PostEditable) {
+    post.editing = false;
+    if (!this.editPostForm.value.text) {
+      return;
+    }
+    this.postService
+      .editPost(post._id, this.editPostForm.value.text)
+      .subscribe(() => {
+        this.toastService.showToast('Post edited', 'success');
+        this.getPosts();
+      });
   }
 
   deletePost(id: string) {
-    console.log(id);
-    // this.posts = this.posts.filter(post => post.id !== id);
+    this.postService.deletePost(id).subscribe(() => {
+      this.closeModal();
+      this.toastService.showToast('Post deleted', 'success');
+      this.getPosts();
+    });
   }
 
-  addComment(post: Post) {
-    console.log(post);
-    // if (!this.newComment.trim()) return;
-    // post.comments.push({ id: Date.now(), text: this.newComment, user: 'You' });
-    // this.newComment = '';
+  openModal() {
+    this.showModal = true;
   }
 
-  deleteComment(post: Post, commentId: string) {
-    console.log(post, commentId);
-    // post.comments = post.comments.filter(comment => comment.id !== commentId);
+  closeModal() {
+    this.showModal = false;
   }
 }
