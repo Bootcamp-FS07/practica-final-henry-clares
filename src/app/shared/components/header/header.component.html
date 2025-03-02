@@ -4,7 +4,7 @@
   <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
   >
-    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+    <a class="flex items-center space-x-3 rtl:space-x-reverse" routerLink="/">
       <span
         class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
         >Glitchgram</span
@@ -12,6 +12,9 @@
     </a>
     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
       <app-toggle-theme></app-toggle-theme>
+      @if (isAuthenticated) {
+        <app-avatar></app-avatar>
+      }
     </div>
     <div
       class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"

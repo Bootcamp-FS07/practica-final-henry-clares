@@ -67,7 +67,7 @@ export class SignInComponent {
           })
         )
         .subscribe(() => {
-          //TODO: Redirect to home and save data
+          this.authService.profile();
           this.toastService.showToast('User logged in successfully', 'success');
           this.loginForm.reset();
         });

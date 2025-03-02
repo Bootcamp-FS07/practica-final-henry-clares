@@ -1,0 +1,75 @@
+<div class="max-w-xl mx-auto p-4 space-y-6">
+  <div class="bg-white shadow rounded-lg p-4 dark:bg-gray-800">
+    <textarea
+      [(ngModel)]="newPost"
+      placeholder="Write something..."
+      class="input-form w-full p-2 border rounded"
+    ></textarea>
+    <button
+      (click)="addPost()"
+      class="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+    >
+      Post
+    </button>
+  </div>
+
+  @for (post of posts; track $index) {
+    <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 space-y-2">
+      <div class="flex justify-between items-start">
+        <div class="flex-col items-center gap-2 pb-2">
+          <p class="font-semibold">&#64;{{ post.author.username }}</p>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            {{ post.createdAt | date: 'short' }}
+          </p>
+        </div>
+        <div class="relative">
+          <button
+            type="button"
+            class="btn-icon p-0"
+            (click)="post.openMenu = !post.openMenu"
+          >
+            <ng-icon name="heroEllipsisVertical"></ng-icon>
+          </button>
+          @if (post.openMenu) {
+            <div
+              class="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-600 z-10"
+            >
+              <ul>
+                <li>
+                  <a href="#" class="menu-item flex items-center gap-2">
+                    <ng-icon name="heroTrash"></ng-icon>
+                    Delete</a
+                  >
+                </li>
+              </ul>
+              <div class="">
+                <a class="menu-item cursor-pointer flex items-center gap-2">
+                  <ng-icon name="heroPencilSquare"></ng-icon>
+                  Edit</a
+                >
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="pb-2">
+        <p class="text-gray-600 dark:text-gray-300">{{ post.text }}</p>
+      </div>
+
+      <div class="mt-2 flex items-center gap-2">
+        <input
+          [(ngModel)]="newComment"
+          placeholder="Add a comment..."
+          class="input-form border p-1 flex-grow rounded"
+        />
+        <button
+          (click)="addComment(post)"
+          class="bg-blue-500 text-white px-2 py-1 rounded text-sm"
+        >
+          Comment
+        </button>
+      </div>
+    </div>
+  }
+</div>
