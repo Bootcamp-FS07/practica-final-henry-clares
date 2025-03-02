@@ -13,6 +13,7 @@ import {
   heroEllipsisVertical,
   heroTrash,
   heroPencilSquare,
+  heroPaperAirplane,
 } from '@ng-icons/heroicons/outline';
 import { serverErrorInterceptor } from './core/interceptors/server-error.interceptor';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
@@ -32,6 +33,7 @@ export const appConfig: ApplicationConfig = {
       heroEllipsisVertical,
       heroTrash,
       heroPencilSquare,
+      heroPaperAirplane,
     }),
     provideNgIconsConfig({
       size: '1.5em',

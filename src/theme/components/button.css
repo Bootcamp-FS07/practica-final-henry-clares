@@ -12,7 +12,7 @@
 }
 
 .btn:not(:disabled):hover {
-  @apply bg-opacity-80;
+  @apply bg-opacity-90;
 }
 
 .btn:not(:disabled):focus {
@@ -28,7 +28,7 @@
 }
 
 .btn-primary {
-  @apply bg-blue-700 text-white dark:bg-blue-600;
+  @apply bg-blue-700 text-white dark:bg-blue-600 dark:text-white;
 }
 
 .btn-icon {

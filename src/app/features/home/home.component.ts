@@ -1,9 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { PostService } from '../../core/services/post/post.service';
 import { Post } from '../../core/services/post/post.type';
 import { NgIcon } from '@ng-icons/core';
+import { ToastService } from '../../core/services/toast/toast.service';
+import { BehaviorSubject } from 'rxjs';
+import { storage } from '../../core/utils/storage/storage.util';
 
 interface PostEditable extends Post {
   editing: boolean;
@@ -12,20 +21,38 @@ interface PostEditable extends Post {
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, FormsModule, NgIcon],
+  imports: [CommonModule, FormsModule, NgIcon, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   postService = inject(PostService);
-  newPost = '';
+  toastService = inject(ToastService);
+
+  private MIN_LENGTH = 4;
+
+  postForm = new FormGroup({
+    text: new FormControl('', [
+      Validators.required,
+      Validators.minLength(this.MIN_LENGTH),
+    ]),
+  });
+
   newComment = '';
   posts: PostEditable[] = [];
-  openMenu = false;
+
+  idUser = new BehaviorSubject(storage.getItem('idUser'));
+
+  isOwner(post: Post): boolean {
+    return this.idUser.getValue() === post.author._id;
+  }
 
   ngOnInit() {
+    this.getPosts();
+  }
+
+  getPosts() {
     this.postService.getPosts().subscribe(posts => {
-      console.log(posts);
       this.posts = posts.map(post => ({
         ...post,
         editing: false,
@@ -35,15 +62,17 @@ export class HomeComponent implements OnInit {
   }
 
   addPost() {
-    // if (!this.newPost.trim()) return;
-    // this.posts.unshift({
-    //   id: Date.now(),
-    //   text: this.newPost,
-    //   user: 'You',
-    //   comments: [],
-    //   editing: false,
-    // });
-    // this.newPost = '';
+    if (this.postForm.invalid) {
+      return;
+    }
+    if (!this.postForm.value.text) {
+      return;
+    }
+    this.postService.addPost(this.postForm.value.text).subscribe(() => {
+      this.toastService.showToast('Post added', 'success');
+      this.getPosts();
+      this.postForm.reset();
+    });
   }
 
   editPost(post: Post) {

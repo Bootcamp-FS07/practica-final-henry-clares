@@ -67,7 +67,7 @@ export class SignInComponent {
           })
         )
         .subscribe(() => {
-          this.authService.profile();
+          this.authService.profile().subscribe();
           this.toastService.showToast('User logged in successfully', 'success');
           this.loginForm.reset();
         });

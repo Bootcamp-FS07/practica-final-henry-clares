@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { storage } from '../../utils/storage/storage.util';
 import { Post } from './post.type';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,16 @@ export class PostService {
   }
 
   getPosts() {
-    return this.http.get<Post[]>(`${this.postUrl}`);
+    return this.http
+      .get<Post[]>(`${this.postUrl}`)
+      .pipe(
+        map(posts =>
+          posts.sort(
+            (a, b) =>
+              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          )
+        )
+      );
   }
 
   addPost(text: string) {
