@@ -1,0 +1,22 @@
+<div class="fixed top-4 right-4 space-y-2 z-50">
+  @for (toast of toasts$ | async; track $index) {
+    <div
+      [ngClass]="{
+        'bg-green-500 text-white': toast.type === 'success',
+        'bg-red-500 text-white': toast.type === 'error',
+        'bg-blue-500 text-white': toast.type === 'info',
+        'bg-yellow-500 text-black': toast.type === 'warning',
+      }"
+      class="flex items-center justify-between px-4 py-3 rounded-lg shadow-lg w-80"
+    >
+      <span class="text-sm font-medium text-white">{{ toast.message }}</span>
+
+      <button
+        (click)="closeToast(toast.id)"
+        class="ml-2 text-white hover:text-gray-300"
+      >
+        ✖
+      </button>
+    </div>
+  }
+</div>

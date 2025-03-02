@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
-import { ThemeService } from '../../../core/services/theme.service';
+import { ThemeService } from '../../../core/services/theme/theme.service';
 
 @Component({
   selector: 'app-toggle-theme',
@@ -30,7 +30,6 @@ export class ToggleThemeComponent {
   }
 
   public toggleTheme(): void {
-    console.log('cambiando', this.themeName);
     this._themeService.toggleDarkMode();
     this.changeStatus();
   }
