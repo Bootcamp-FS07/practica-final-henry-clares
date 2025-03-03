@@ -24,6 +24,8 @@
           @if (comment.openMenu) {
             <div
               class="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-600 z-10"
+              appClickOutside
+              (clickOutside)="comment.openMenu = false"
             >
               <ul>
                 <li>
