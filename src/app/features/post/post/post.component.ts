@@ -1,4 +1,11 @@
-import { Component, inject, input, output, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  output,
+  OnInit,
+  OnChanges,
+} from '@angular/core';
 import { IPostEditable } from '../../../core/services/post/post.type';
 
 import { NgIcon } from '@ng-icons/core';
@@ -38,7 +45,7 @@ import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
   templateUrl: './post.component.html',
   styleUrl: './post.component.css',
 })
-export class PostComponent implements OnInit {
+export class PostComponent implements OnInit, OnChanges {
   postEditable = input<IPostEditable>();
   getPosts = output();
 
@@ -61,6 +68,10 @@ export class PostComponent implements OnInit {
   comments: ICommentEditable[] = [];
 
   ngOnInit() {
+    this.getComments();
+  }
+
+  ngOnChanges() {
     this.getComments();
   }
 
@@ -96,6 +107,7 @@ export class PostComponent implements OnInit {
       this.closeModal();
       this.toastService.showToast('Post deleted', 'success');
       this.getPosts.emit();
+      this.getComments();
     });
   }
 
