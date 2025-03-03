@@ -73,6 +73,7 @@ export class PostComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.getComments();
+    this.showComment = false;
   }
 
   get post() {

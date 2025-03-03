@@ -6,7 +6,7 @@ import { ToastService } from '../../core/services/toast/toast.service';
 import { CreatePostComponent } from '../post/create-post/create-post.component';
 import { PostComponent } from '../post/post/post.component';
 import { IPostEditable } from '../../core/services/post/post.type';
-import { NgIcon } from '@ng-icons/core';
+import { PaginatorComponent } from '../../shared/components/paginator/paginator.component';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +16,7 @@ import { NgIcon } from '@ng-icons/core';
     ReactiveFormsModule,
     CreatePostComponent,
     PostComponent,
-    NgIcon,
+    PaginatorComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -26,6 +26,9 @@ export class HomeComponent implements OnInit {
   toastService = inject(ToastService);
 
   posts: IPostEditable[] = [];
+  postsFiltered: IPostEditable[] = [];
+
+  itemsPerPage = 5;
 
   ngOnInit() {
     this.getPosts();
@@ -38,6 +41,18 @@ export class HomeComponent implements OnInit {
         editing: false,
         openMenu: false,
       }));
+
+      this.paginate(1, this.posts);
     });
+  }
+
+  onPageChange(page: number) {
+    this.paginate(page);
+  }
+
+  paginate(page: number, posts: IPostEditable[] = this.posts) {
+    const startIndex = (page - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.postsFiltered = [...posts].slice(startIndex, endIndex);
   }
 }

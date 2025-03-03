@@ -2,20 +2,14 @@
   <app-create-post (getPosts)="getPosts()"></app-create-post>
 
   <div class="grid gap-4">
-    @for (post of posts; track $index) {
+    @for (post of postsFiltered; track $index) {
       <app-post [postEditable]="post" (getPosts)="getPosts()"></app-post>
     }
   </div>
 
-  <div class="flex space-x-1 justify-center">
-    <button class="btn-page">
-      <ng-icon name="heroChevronLeft"></ng-icon>
-    </button>
-    <button class="btn-page">1</button>
-    <button class="btn-page">2</button>
-    <button class="btn-page">3</button>
-    <button class="btn-page">
-      <ng-icon name="heroChevronRight"></ng-icon>
-    </button>
-  </div>
+  <app-paginator
+    [totalItems]="posts.length"
+    [itemsPerPage]="itemsPerPage"
+    (pageChange)="onPageChange($event)"
+  ></app-paginator>
 </div>
