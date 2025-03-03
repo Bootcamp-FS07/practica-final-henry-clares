@@ -20,6 +20,7 @@ import {
 } from '@ng-icons/heroicons/outline';
 import { serverErrorInterceptor } from './core/interceptors/server-error.interceptor';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -44,5 +45,6 @@ export const appConfig: ApplicationConfig = {
     provideNgIconsConfig({
       size: '1.5em',
     }),
+    provideAnimationsAsync(),
   ],
 };

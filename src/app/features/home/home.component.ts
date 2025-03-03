@@ -7,6 +7,7 @@ import { CreatePostComponent } from '../post/create-post/create-post.component';
 import { PostComponent } from '../post/post/post.component';
 import { IPostEditable } from '../../core/services/post/post.type';
 import { PaginatorComponent } from '../../shared/components/paginator/paginator.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,17 @@ import { PaginatorComponent } from '../../shared/components/paginator/paginator.
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-10px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class HomeComponent implements OnInit {
   postService = inject(PostService);

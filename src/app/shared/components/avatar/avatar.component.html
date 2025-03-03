@@ -12,6 +12,8 @@
 @if (openMenu) {
   <div
     class="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-600 z-10"
+    appClickOutside
+    (clickOutside)="openMenu = false"
   >
     <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
       <div>{{ user }}</div>

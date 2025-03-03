@@ -1,5 +1,8 @@
 @if (post) {
-  <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 space-y-2">
+  <div
+    class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 space-y-2"
+    @fadeIn
+  >
     <div class="flex justify-between items-start">
       <div class="flex-col items-center gap-2 pb-2">
         <p class="font-semibold">&#64;{{ post.author.username }}</p>
@@ -21,6 +24,8 @@
           @if (post.openMenu) {
             <div
               class="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-600 z-10"
+              appClickOutside
+              (clickOutside)="post.openMenu = false"
             >
               <ul>
                 <li>

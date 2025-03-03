@@ -29,6 +29,8 @@ import { CommentComponent } from '../../comment/comment/comment.component';
 import { CommentCountPipe } from '../../../core/pipes/comment-count.pipe';
 import { FromNowPipe } from '../../../core/pipes/from-now.pipe';
 import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { ClickOutsideDirective } from '../../../core/directives/click-outside.directive';
 
 @Component({
   selector: 'app-post',
@@ -41,9 +43,21 @@ import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
     CommentCountPipe,
     FromNowPipe,
     IsEditedPipe,
+    ClickOutsideDirective,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css',
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-10px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class PostComponent implements OnInit, OnChanges {
   postEditable = input<IPostEditable>();

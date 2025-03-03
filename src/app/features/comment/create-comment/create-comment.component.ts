@@ -9,10 +9,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { VALIDATION } from '../../../shared/constants';
+import { AutoFocusDirective } from '../../../core/directives/auto-focus.directive';
 
 @Component({
   selector: 'app-create-comment',
-  imports: [NgIcon, ReactiveFormsModule],
+  imports: [NgIcon, ReactiveFormsModule, AutoFocusDirective],
   templateUrl: './create-comment.component.html',
   styleUrl: './create-comment.component.css',
 })
