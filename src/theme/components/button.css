@@ -1,5 +1,5 @@
 .btn {
-  @apply w-full md:w-auto;
+  @apply w-full;
   @apply border border-transparent rounded-lg outline-none;
   @apply h-10 min-w-[80px] py-2 px-3;
   @apply relative inline-flex items-center justify-center;
@@ -42,4 +42,14 @@
 .btn-menu {
   @apply block text-sm px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white rounded;
   @apply cursor-pointer w-full text-start flex items-center gap-2;
+}
+
+.btn-page {
+  @apply rounded-md border border-slate-300 dark:border-gray-700;
+  @apply py-2 px-3 flex items-center justify-center;
+  @apply text-center text-sm transition-all shadow-sm text-gray-600 dark:text-gray-300;
+  @apply hover:shadow-lg hover:text-white hover:bg-slate-800 dark:hover:bg-gray-700 hover:border-slate-800;
+  @apply focus:text-white focus:bg-slate-800 focus:border-slate-800;
+  @apply active:border-slate-800 active:text-white active:bg-slate-800;
+  @apply disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2;
 }

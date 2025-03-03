@@ -5,9 +5,10 @@
     ></div>
     <div class="items-center justify-between mb-2 flex">
       <div>
-        <time class="mb-1 text-xs font-normal text-gray-400">{{
-          comment.createdAt | date: 'medium'
-        }}</time>
+        <p class="mb-1 text-xs font-normal text-gray-400">
+          {{ comment.createdAt | fromNow }}
+          {{ comment.createdAt | isEdited: comment.updatedAt }}
+        </p>
         <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">
           &#64;{{ comment.author.username }}
         </div>
@@ -61,7 +62,9 @@
       }
     </div>
     @if (!comment.editing) {
-      <p class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400">
+      <p
+        class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400 break-all"
+      >
         {{ comment.text }}
       </p>
     }

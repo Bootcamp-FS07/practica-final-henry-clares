@@ -4,7 +4,8 @@
       <div class="flex-col items-center gap-2 pb-2">
         <p class="font-semibold">&#64;{{ post.author.username }}</p>
         <p class="text-xs text-gray-600 dark:text-gray-400">
-          {{ post.createdAt | date: 'medium' }}
+          {{ post.createdAt | fromNow }}
+          {{ post.createdAt | isEdited: post.updatedAt }}
         </p>
       </div>
 
@@ -60,7 +61,9 @@
 
     @if (!post.editing) {
       <div class="pb-2">
-        <p class="text-gray-600 dark:text-gray-300">{{ post.text }}</p>
+        <p class="text-gray-600 dark:text-gray-300 break-all">
+          {{ post.text }}
+        </p>
       </div>
     }
 
@@ -89,18 +92,21 @@
     }
 
     <button
-      class="btn-icon"
+      class="flex items-center gap-1 text-gray-600 dark:text-gray-400 text-sm"
       aria-label="Comment"
       (click)="showComment = !showComment"
     >
       <ng-icon name="heroChatBubbleLeft"></ng-icon>
+      {{ comments | commentCount }}
     </button>
 
     @if (showComment) {
-      <app-create-comment
-        [postId]="post._id"
-        (getComments)="getComments()"
-      ></app-create-comment>
+      <div class="pt-2">
+        <app-create-comment
+          [postId]="post._id"
+          (getComments)="getComments()"
+        ></app-create-comment>
+      </div>
 
       <div class="space-y-2">
         <ol class="relative border-s border-gray-200 dark:border-gray-700">

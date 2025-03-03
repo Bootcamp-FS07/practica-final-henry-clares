@@ -15,6 +15,8 @@ import {
   heroPencilSquare,
   heroPaperAirplane,
   heroChatBubbleLeft,
+  heroChevronLeft,
+  heroChevronRight,
 } from '@ng-icons/heroicons/outline';
 import { serverErrorInterceptor } from './core/interceptors/server-error.interceptor';
 import { jwtInterceptor } from './core/interceptors/jwt.interceptor';
@@ -36,6 +38,8 @@ export const appConfig: ApplicationConfig = {
       heroPencilSquare,
       heroPaperAirplane,
       heroChatBubbleLeft,
+      heroChevronLeft,
+      heroChevronRight,
     }),
     provideNgIconsConfig({
       size: '1.5em',

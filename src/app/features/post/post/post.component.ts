@@ -2,7 +2,6 @@ import { Component, inject, input, output, OnInit } from '@angular/core';
 import { IPostEditable } from '../../../core/services/post/post.type';
 
 import { NgIcon } from '@ng-icons/core';
-import { DatePipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { storage } from '../../../core/utils/storage/storage.util';
 import {
@@ -11,6 +10,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
 import { VALIDATION } from '../../../shared/constants';
 import { PostService } from '../../../core/services/post/post.service';
 import { ToastService } from '../../../core/services/toast/toast.service';
@@ -19,16 +19,21 @@ import { CreateCommentComponent } from '../../comment/create-comment/create-comm
 import { CommentService } from '../../../core/services/comment/comment.service';
 import { ICommentEditable } from '../../../core/services/comment/comment.type';
 import { CommentComponent } from '../../comment/comment/comment.component';
+import { CommentCountPipe } from '../../../core/pipes/comment-count.pipe';
+import { FromNowPipe } from '../../../core/pipes/from-now.pipe';
+import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
 
 @Component({
   selector: 'app-post',
   imports: [
     NgIcon,
-    DatePipe,
     ReactiveFormsModule,
     ConfirmModalComponent,
     CreateCommentComponent,
     CommentComponent,
+    CommentCountPipe,
+    FromNowPipe,
+    IsEditedPipe,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css',

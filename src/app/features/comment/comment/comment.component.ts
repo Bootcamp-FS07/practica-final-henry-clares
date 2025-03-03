@@ -5,19 +5,28 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+
+import { NgIcon } from '@ng-icons/core';
+
 import { ToastService } from '../../../core/services/toast/toast.service';
 import { CommentService } from '../../../core/services/comment/comment.service';
 import { VALIDATION } from '../../../shared/constants';
 import { storage } from '../../../core/utils/storage/storage.util';
-import { BehaviorSubject } from 'rxjs';
 import { ICommentEditable } from '../../../core/services/comment/comment.type';
-import { DatePipe } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
+import { FromNowPipe } from '../../../core/pipes/from-now.pipe';
+import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
 
 @Component({
   selector: 'app-comment',
-  imports: [ReactiveFormsModule, DatePipe, NgIcon, ConfirmModalComponent],
+  imports: [
+    ReactiveFormsModule,
+    NgIcon,
+    ConfirmModalComponent,
+    FromNowPipe,
+    IsEditedPipe,
+  ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',
 })
