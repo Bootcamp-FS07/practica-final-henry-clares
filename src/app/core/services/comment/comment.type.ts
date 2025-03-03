@@ -1,6 +1,6 @@
 import { UserProfile } from '../auth/auth.type';
 
-export interface IPost {
+export interface IComment {
   _id: string;
   text: string;
   author: UserProfile;
@@ -8,7 +8,7 @@ export interface IPost {
   updatedAt: Date;
 }
 
-export interface IPostEditable extends IPost {
+export interface ICommentEditable extends IComment {
   editing: boolean;
   openMenu: boolean;
 }

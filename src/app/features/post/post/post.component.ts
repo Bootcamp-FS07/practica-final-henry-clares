@@ -1,5 +1,6 @@
-import { Component, inject, input, output } from '@angular/core';
-import { Post } from '../../../core/services/post/post.type';
+import { Component, inject, input, output, OnInit } from '@angular/core';
+import { IPostEditable } from '../../../core/services/post/post.type';
+
 import { NgIcon } from '@ng-icons/core';
 import { DatePipe } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
@@ -14,28 +15,36 @@ import { VALIDATION } from '../../../shared/constants';
 import { PostService } from '../../../core/services/post/post.service';
 import { ToastService } from '../../../core/services/toast/toast.service';
 import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/confirm-modal.component';
-
-interface PostEditable extends Post {
-  editing: boolean;
-  openMenu: boolean;
-}
+import { CreateCommentComponent } from '../../comment/create-comment/create-comment.component';
+import { CommentService } from '../../../core/services/comment/comment.service';
+import { ICommentEditable } from '../../../core/services/comment/comment.type';
+import { CommentComponent } from '../../comment/comment/comment.component';
 
 @Component({
   selector: 'app-post',
-  imports: [NgIcon, DatePipe, ReactiveFormsModule, ConfirmModalComponent],
+  imports: [
+    NgIcon,
+    DatePipe,
+    ReactiveFormsModule,
+    ConfirmModalComponent,
+    CreateCommentComponent,
+    CommentComponent,
+  ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css',
 })
-export class PostComponent {
-  postEditable = input<PostEditable>();
+export class PostComponent implements OnInit {
+  postEditable = input<IPostEditable>();
   getPosts = output();
 
   postService = inject(PostService);
   toastService = inject(ToastService);
+  commentService = inject(CommentService);
 
   idUser = new BehaviorSubject(storage.getItem('idUser'));
 
   showModal = false;
+  showComment = false;
 
   editPostForm = new FormGroup({
     text: new FormControl('', [
@@ -44,6 +53,12 @@ export class PostComponent {
     ]),
   });
 
+  comments: ICommentEditable[] = [];
+
+  ngOnInit() {
+    this.getComments();
+  }
+
   get post() {
     return this.postEditable();
   }
@@ -51,13 +66,14 @@ export class PostComponent {
   isOwner(): boolean {
     return this.idUser.getValue() === this.post?.author._id;
   }
-  startEditing(post: PostEditable) {
+
+  startEditing(post: IPostEditable) {
     post.editing = true;
     post.openMenu = false;
     this.editPostForm.patchValue({ text: post.text });
   }
 
-  editPost(post: PostEditable) {
+  editPost(post: IPostEditable) {
     post.editing = false;
     if (!this.editPostForm.value.text) {
       return;
@@ -84,5 +100,19 @@ export class PostComponent {
 
   closeModal() {
     this.showModal = false;
+  }
+
+  getComments() {
+    if (!this.post?._id) {
+      return;
+    }
+
+    this.commentService.getComments(this.post._id).subscribe(comments => {
+      this.comments = comments.map(comment => ({
+        ...comment,
+        editing: false,
+        openMenu: false,
+      }));
+    });
   }
 }

@@ -25,7 +25,7 @@
                 <li>
                   <button
                     type="button"
-                    class="menu-item cursor-pointer w-full text-start flex items-center gap-2"
+                    class="btn-menu"
                     (click)="startEditing(post)"
                   >
                     <ng-icon name="heroPencilSquare"></ng-icon>
@@ -35,7 +35,7 @@
                 <li>
                   <button
                     type="button"
-                    class="menu-item cursor-pointer w-full text-start flex items-center gap-2"
+                    class="btn-menu"
                     (click)="openModal(); post.openMenu = false"
                   >
                     <ng-icon name="heroTrash"></ng-icon>
@@ -65,10 +65,7 @@
     }
 
     @if (post.editing) {
-      <form
-        [formGroup]="editPostForm"
-        (ngSubmit)="editPost(post); post.editing = false"
-      >
+      <form [formGroup]="editPostForm" (ngSubmit)="editPost(post)">
         <textarea
           placeholder="Write something..."
           class="input-form w-full p-2 border rounded mb-2"
@@ -91,11 +88,30 @@
       </form>
     }
 
-    <div class="mt-2 flex items-center gap-2">
-      <input placeholder="Add a comment..." class="input-form flex-grow" />
-      <button type="button" class="btn btn-primary w-10 h-10">
-        <ng-icon name="heroPaperAirplane"></ng-icon>
-      </button>
-    </div>
+    <button
+      class="btn-icon"
+      aria-label="Comment"
+      (click)="showComment = !showComment"
+    >
+      <ng-icon name="heroChatBubbleLeft"></ng-icon>
+    </button>
+
+    @if (showComment) {
+      <app-create-comment
+        [postId]="post._id"
+        (getComments)="getComments()"
+      ></app-create-comment>
+
+      <div class="space-y-2">
+        <ol class="relative border-s border-gray-200 dark:border-gray-700">
+          @for (comment of comments; track $index) {
+            <app-comment
+              [commentEditable]="comment"
+              (getComments)="getComments()"
+            ></app-comment>
+          }
+        </ol>
+      </div>
+    }
   </div>
 }

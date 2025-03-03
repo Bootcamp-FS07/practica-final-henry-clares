@@ -1,9 +1,8 @@
-import { inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { storage } from '../../utils/storage/storage.util';
-import { Post } from './post.type';
+import { IPost } from './post.type';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -12,17 +11,15 @@ import { map } from 'rxjs';
 export class PostService {
   postUrl = `${environment.baseUrl}/post`;
 
-  router = inject(Router);
-
   constructor(private http: HttpClient) {}
 
   getPost(id: string) {
-    return this.http.get<Post>(`${this.postUrl}/${id}`);
+    return this.http.get<IPost>(`${this.postUrl}/${id}`);
   }
 
   getPosts() {
     return this.http
-      .get<Post[]>(`${this.postUrl}`)
+      .get<IPost[]>(`${this.postUrl}`)
       .pipe(
         map(posts =>
           posts.sort(
