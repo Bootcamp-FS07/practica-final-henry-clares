@@ -1,0 +1,25 @@
+<div class="flex items-center gap-4">
+  <button (click)="openMenu = !openMenu">
+    <div
+      class="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600"
+    >
+      <span class="font-semibold text-gray-600 dark:text-gray-300">{{
+        user[1] | uppercase
+      }}</span>
+    </div>
+  </button>
+</div>
+@if (openMenu) {
+  <div
+    class="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-600 z-10"
+    appClickOutside
+    (clickOutside)="openMenu = false"
+  >
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div>{{ user }}</div>
+    </div>
+    <div class="py-1">
+      <button (click)="logout()" class="btn-menu">Sign out</button>
+    </div>
+  </div>
+}

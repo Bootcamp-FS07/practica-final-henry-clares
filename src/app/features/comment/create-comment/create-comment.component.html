@@ -1,0 +1,17 @@
+<form [formGroup]="commentForm" (ngSubmit)="addComment()">
+  <div class="mt-2 flex items-center gap-2">
+    <input
+      placeholder="Add a comment..."
+      class="input-form flex-grow"
+      formControlName="text"
+      appAutoFocus
+    />
+    <button
+      type="submit"
+      class="btn btn-primary w-10 h-10"
+      [disabled]="commentForm.invalid"
+    >
+      <ng-icon name="heroPaperAirplane"></ng-icon>
+    </button>
+  </div>
+</form>

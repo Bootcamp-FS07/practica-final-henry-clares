@@ -1,0 +1,10 @@
+<form [formGroup]="postForm" (ngSubmit)="addPost()">
+  <div class="bg-white shadow rounded-lg p-4 dark:bg-gray-800 space-y-4">
+    <textarea
+      placeholder="Write something..."
+      class="input-form w-full p-2 border rounded"
+      formControlName="text"
+    ></textarea>
+    <button [disabled]="!postForm.valid" class="btn btn-primary">Post</button>
+  </div>
+</form>

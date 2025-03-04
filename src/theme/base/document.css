@@ -1,0 +1,9 @@
+html,
+body {
+  @apply h-full;
+  @apply font-inter;
+}
+
+body {
+  @apply dark:bg-gray-900 dark:text-white text-gray-900 bg-white;
+}

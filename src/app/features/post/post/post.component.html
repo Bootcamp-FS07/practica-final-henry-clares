@@ -1,0 +1,127 @@
+@if (post) {
+  <div
+    class="bg-white dark:bg-gray-800 shadow rounded-lg p-4 space-y-2"
+    @fadeIn
+  >
+    <div class="flex justify-between items-start">
+      <div class="flex-col items-center gap-2 pb-2">
+        <p class="font-semibold">&#64;{{ post.author.username }}</p>
+        <p class="text-xs text-gray-600 dark:text-gray-400">
+          {{ post.createdAt | fromNow }}
+          {{ post.createdAt | isEdited: post.updatedAt }}
+        </p>
+      </div>
+
+      @if (isOwner()) {
+        <div class="relative">
+          <button
+            type="button"
+            class="btn-icon p-0"
+            (click)="post.openMenu = !post.openMenu"
+          >
+            <ng-icon name="heroEllipsisVertical"></ng-icon>
+          </button>
+          @if (post.openMenu) {
+            <div
+              class="absolute right-0 mt-2 w-44 bg-white divide-y divide-gray-100 rounded-lg shadow-md dark:bg-gray-700 dark:divide-gray-600 z-10"
+              appClickOutside
+              (clickOutside)="post.openMenu = false"
+            >
+              <ul>
+                <li>
+                  <button
+                    type="button"
+                    class="btn-menu"
+                    (click)="startEditing(post)"
+                  >
+                    <ng-icon name="heroPencilSquare"></ng-icon>
+                    Edit
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    class="btn-menu"
+                    (click)="openModal(); post.openMenu = false"
+                  >
+                    <ng-icon name="heroTrash"></ng-icon>
+                    Delete
+                  </button>
+                </li>
+              </ul>
+            </div>
+          }
+        </div>
+        @if (showModal) {
+          <app-confirm-modal
+            title="Delete Post"
+            message="Are you sure you want to delete this post?"
+            (okAction)="deletePost(post._id)"
+            (cancelAction)="closeModal()"
+          ></app-confirm-modal>
+        }
+      }
+    </div>
+
+    @if (!post.editing) {
+      <div class="pb-2">
+        <p class="text-gray-600 dark:text-gray-300 break-all">
+          {{ post.text }}
+        </p>
+      </div>
+    }
+
+    @if (post.editing) {
+      <form [formGroup]="editPostForm" (ngSubmit)="editPost(post)">
+        <textarea
+          placeholder="Write something..."
+          class="input-form w-full p-2 border rounded mb-2"
+          formControlName="text"
+          (value)="(post.text)"
+        ></textarea>
+        <div class="flex justify-end gap-2">
+          <button class="btn btn-secondary" (click)="post.editing = false">
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="btn bg-green-500 text-white"
+            [disabled]="editPostForm.invalid"
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    }
+
+    <button
+      class="flex items-center gap-1 text-gray-600 dark:text-gray-400 text-sm"
+      aria-label="Comment"
+      (click)="showComment = !showComment"
+    >
+      <ng-icon name="heroChatBubbleLeft"></ng-icon>
+      {{ comments | commentCount }}
+    </button>
+
+    @if (showComment) {
+      <div class="pt-2">
+        <app-create-comment
+          [postId]="post._id"
+          (getComments)="getComments()"
+        ></app-create-comment>
+      </div>
+
+      <div class="space-y-2">
+        <ol class="relative border-s border-gray-200 dark:border-gray-700">
+          @for (comment of comments; track $index) {
+            <app-comment
+              [commentEditable]="comment"
+              (getComments)="getComments()"
+            ></app-comment>
+          }
+        </ol>
+      </div>
+    }
+  </div>
+}

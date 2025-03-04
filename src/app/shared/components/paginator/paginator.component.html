@@ -1,0 +1,13 @@
+<div class="flex space-x-1 justify-center pt-4">
+  <button class="btn-page" (click)="onPrevious()">
+    <ng-icon name="heroChevronLeft"></ng-icon>
+  </button>
+  @for (num of [].constructor(totalPages); track $index) {
+    <button class="btn-page" (click)="onPageSelect($index + 1)">
+      {{ $index + 1 }}
+    </button>
+  }
+  <button class="btn-page" (click)="onNext()">
+    <ng-icon name="heroChevronRight"></ng-icon>
+  </button>
+</div>

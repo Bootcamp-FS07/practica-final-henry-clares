@@ -1,0 +1,87 @@
+<section>
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <div class="card">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <p
+          class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+        >
+          Create an account
+        </p>
+        <form
+          class="space-y-4 md:space-y-6"
+          [formGroup]="registerForm"
+          (ngSubmit)="onSubmit()"
+        >
+          <div>
+            <label for="email">User account</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="input-form"
+              placeholder="john.doe"
+              required=""
+              formControlName="username"
+            />
+            @if (registerForm.get('username')?.errors) {
+              <p class="error">
+                {{ getErrorMessage('username') }}
+              </p>
+            }
+          </div>
+
+          <div>
+            <label for="password">Password</label>
+
+            <div class="relative">
+              <input
+                id="password"
+                class="input-form"
+                [type]="visible ? 'text' : 'password'"
+                placeholder="••••••••"
+                class="input-form"
+                required=""
+                formControlName="password"
+              />
+              <button
+                type="button"
+                class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-500 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:focus:text-blue-500"
+                (click)="visible = !visible"
+              >
+                @if (visible) {
+                  <ng-icon name="heroEye"></ng-icon>
+                } @else {
+                  <ng-icon name="heroEyeSlash"></ng-icon>
+                }
+              </button>
+            </div>
+            @if (registerForm.get('password')?.errors) {
+              <p class="error">
+                {{ getErrorMessage('password') }}
+              </p>
+            }
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!registerForm.valid"
+          >
+            Create an account
+          </button>
+
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            Already have an account?
+            <a
+              routerLink="../sign-in"
+              class="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >Login here</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

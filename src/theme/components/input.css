@@ -1,0 +1,24 @@
+.input-form {
+  @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg;
+  /*@apply focus:ring-primary-600 focus:border-primary-600;*/
+  @apply block w-full p-2.5;
+  @apply dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.input-form:disabled {
+  @apply opacity-80 cursor-not-allowed;
+}
+
+.input-form:not(:disabled):focus {
+  /*@apply ring-2 ring-gray-400 ring-offset-2 dark:ring-zinc-700;*/
+}
+
+.input-form:not(:disabled):hover {
+  @apply bg-opacity-80;
+}
+
+.input-form::-webkit-outer-spin-button,
+.input-form::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
