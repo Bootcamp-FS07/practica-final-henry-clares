@@ -1,0 +1,11 @@
+<div class="text-gray-600 dark:text-gray-300 break-all">
+  {{ isExpanded ? fullText : truncatedText }}
+  @if (fullText) {
+    <button
+      (click)="toggleText()"
+      class="text-blue-500 dark:text-blue-400 hover:underline"
+    >
+      {{ isExpanded ? 'show less' : 'show more' }}
+    </button>
+  }
+</div>

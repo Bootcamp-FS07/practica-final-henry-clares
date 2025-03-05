@@ -31,6 +31,7 @@ import { FromNowPipe } from '../../../core/pipes/from-now.pipe';
 import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ClickOutsideDirective } from '../../../core/directives/click-outside.directive';
+import { ExpandableContentComponent } from '../../../shared/components/expandable-content/expandable-content.component';
 
 @Component({
   selector: 'app-post',
@@ -44,6 +45,7 @@ import { ClickOutsideDirective } from '../../../core/directives/click-outside.di
     FromNowPipe,
     IsEditedPipe,
     ClickOutsideDirective,
+    ExpandableContentComponent,
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.css',
