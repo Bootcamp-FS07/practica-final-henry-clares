@@ -65,9 +65,7 @@
 
     @if (!post.editing) {
       <div class="pb-2">
-        <p class="text-gray-600 dark:text-gray-300 break-all">
-          {{ post.text }}
-        </p>
+        <app-expandable-content [content]="post.text"></app-expandable-content>
       </div>
     }
 

@@ -59,11 +59,13 @@
       }
     </div>
     @if (!comment.editing) {
-      <p
+      <div
         class="mb-2 text-base font-normal text-gray-500 dark:text-gray-400 break-all"
       >
-        {{ comment.text }}
-      </p>
+        <app-expandable-content
+          [content]="comment.text"
+        ></app-expandable-content>
+      </div>
     }
     @if (comment.editing) {
       <form [formGroup]="editCommentForm" (ngSubmit)="editComment(comment)">

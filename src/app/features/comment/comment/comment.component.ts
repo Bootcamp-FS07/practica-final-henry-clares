@@ -18,6 +18,7 @@ import { ConfirmModalComponent } from '../../../shared/components/confirm-modal/
 import { FromNowPipe } from '../../../core/pipes/from-now.pipe';
 import { IsEditedPipe } from '../../../core/pipes/is-edited.pipe';
 import { ClickOutsideDirective } from '../../../core/directives/click-outside.directive';
+import { ExpandableContentComponent } from '../../../shared/components/expandable-content/expandable-content.component';
 
 @Component({
   selector: 'app-comment',
@@ -28,6 +29,7 @@ import { ClickOutsideDirective } from '../../../core/directives/click-outside.di
     FromNowPipe,
     IsEditedPipe,
     ClickOutsideDirective,
+    ExpandableContentComponent,
   ],
   templateUrl: './comment.component.html',
   styleUrl: './comment.component.css',

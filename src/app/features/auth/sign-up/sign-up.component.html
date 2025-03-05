@@ -64,6 +64,37 @@
             }
           </div>
 
+          <div>
+            <label for="confirmPassword">Confirm password</label>
+
+            <div class="relative">
+              <input
+                id="confirmPassword"
+                class="input-form"
+                [type]="visibleConfirm ? 'text' : 'password'"
+                placeholder="••••••••"
+                class="input-form"
+                required=""
+                formControlName="confirmPassword"
+              />
+              <button
+                type="button"
+                class="absolute inset-y-0 end-0 flex items-center z-20 px-3 cursor-pointer text-gray-500 rounded-e-md focus:outline-none focus:text-blue-600 dark:text-neutral-500 dark:focus:text-blue-500"
+                (click)="visibleConfirm = !visibleConfirm"
+              >
+                @if (visibleConfirm) {
+                  <ng-icon name="heroEye"></ng-icon>
+                } @else {
+                  <ng-icon name="heroEyeSlash"></ng-icon>
+                }
+              </button>
+            </div>
+            @if (
+              registerForm.hasError('passwordMismatch') && registerForm.touched
+            ) {
+              <p class="error">Passwords do not match.</p>
+            }
+          </div>
           <button
             type="submit"
             class="btn btn-primary"
